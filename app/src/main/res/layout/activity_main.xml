@@ -1,302 +1,197 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+package com.example.calculatrice;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+public class MainActivity extends AppCompatActivity {
+
+    private EditText ecran;
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ecran = findViewById(R.id.ecran);
+    }
 
-            <EditText
-                android:id="@+id/ecran"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:gravity="right|center_vertical"
-                android:inputType="textPersonName"
-                android:paddingRight="20dp"
-                android:text="0"
-                android:textSize="80sp" />
-        </LinearLayout>
+    public void clickFunc(View view) {
+        // Enlever les zero au debut si yen a
+        String text = ecran.getText().toString();
+        if (text.charAt(0) == '0'){
+            ecran.setText(text.substring(1));
+        }
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+        switch (view.getId()) {
+            case (R.id.btm0):
+                ecran.setText(ecran.getText() + "0", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm1):
+                ecran.setText(ecran.getText() + "1", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm2):
+                ecran.setText(ecran.getText() + "2", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm3):
+                ecran.setText(ecran.getText() + "3", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm4):
+                ecran.setText(ecran.getText() + "4", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm5):
+                ecran.setText(ecran.getText() + "5", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm6):
+                ecran.setText(ecran.getText() + "6", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm7):
+                ecran.setText(ecran.getText() + "7", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm8):
+                ecran.setText(ecran.getText() + "8", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btm9):
+                ecran.setText(ecran.getText() + "9", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmPlus):
+                ecran.setText(ecran.getText() + "+", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmMoins):
+                ecran.setText(ecran.getText() + "-", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmMultiplier):
+                ecran.setText(ecran.getText() + "*", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmDivision):
+                ecran.setText(ecran.getText() + "/", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmModulo):
+                
+                break;
+            case (R.id.btmVirgule):
+                ecran.setText(ecran.getText() + ".", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmRetour):
+                String x = ecran.getText().toString();
+                if (x.length() > 1) {
+                    ecran.setText(x.substring(0, x.length() - 1), TextView.BufferType.EDITABLE);
+                }
+                else{
+                    ecran.setText("0", TextView.BufferType.EDITABLE);
+                }
+                break;
+            case (R.id.btmCarre):
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                ecran.setText("sqrt" + ecran.getText(), TextView.BufferType.EDITABLE);
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmPlusMoins):
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                if (Double.parseDouble(ecran.getText().toString()) > 0){
+                    ecran.setText("-" + ecran.getText(), TextView.BufferType.EDITABLE);
+                }
+                else {
+                    ecran.setText(ecran.getText().toString().substring(1), TextView.BufferType.EDITABLE);
+                }
+                break;
+            case (R.id.btmInverse):
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                ecran.setText("inv" + ecran.getText(), TextView.BufferType.EDITABLE);
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmC):
+                ecran.setText("0", TextView.BufferType.EDITABLE);
+                break;
+            case (R.id.btmEgale):
+                ecran.setText(String.valueOf(eval(ecran.getText().toString())), TextView.BufferType.EDITABLE);
+                break;
+        }
+    }
 
-            <Button
-                android:id="@+id/btmRetour"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="←"
-                android:textSize="24sp" />
+    public double eval(final String str) {
+        return new Object() {
+            int pos = -1, ch;
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="CE"
-                android:textSize="24sp" />
+            void nextChar() {
+                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
+            }
 
-            <Button
-                android:id="@+id/btmC"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="C"
-                android:textSize="24sp" />
+            boolean eat(int charToEat) {
+                while (ch == ' ') nextChar();
+                if (ch == charToEat) {
+                    nextChar();
+                    return true;
+                }
+                return false;
+            }
 
-            <Button
-                android:id="@+id/btmPlusMoins"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="+-"
-                android:textSize="24sp" />
+            double parse() {
+                nextChar();
+                double x = parseExpression();
+                if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+                return x;
+            }
 
-            <Button
-                android:id="@+id/btmCarre"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="√"
-                android:textSize="24sp" />
-        </LinearLayout>
+            // Grammar:
+            // expression = term | expression `+` term | expression `-` term
+            // term = factor | term `*` factor | term `/` factor
+            // factor = `+` factor | `-` factor | `(` expression `)`
+            //        | number | functionName factor | factor `^` factor
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            double parseExpression() {
+                double x = parseTerm();
+                for (;;) {
+                    if      (eat('+')) x += parseTerm(); // addition
+                    else if (eat('-')) x -= parseTerm(); // subtraction
+                    else return x;
+                }
+            }
 
-            <Button
-                android:id="@+id/btm7"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="7"
-                android:textSize="24sp" />
+            double parseTerm() {
+                double x = parseFactor();
+                for (;;) {
+                    if      (eat('*')) x *= parseFactor(); // multiplication
+                    else if (eat('/')) x /= parseFactor(); // division
+                    else return x;
+                }
+            }
 
-            <Button
-                android:id="@+id/btm8"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="8"
-                android:textSize="24sp" />
+            double parseFactor() {
+                if (eat('+')) return parseFactor(); // unary plus
+                if (eat('-')) return -parseFactor(); // unary minus
 
-            <Button
-                android:id="@+id/btm9"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="9"
-                android:textSize="24sp" />
+                double x;
+                int startPos = this.pos;
+                if (eat('(')) { // parentheses
+                    x = parseExpression();
+                    eat(')');
+                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+                    while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+                    x = Double.parseDouble(str.substring(startPos, this.pos));
+                } else if (ch >= 'a' && ch <= 'z') { // functions
+                    while (ch >= 'a' && ch <= 'z') nextChar();
+                    String func = str.substring(startPos, this.pos);
+                    x = parseFactor();
+                    if (func.equals("sqrt")) x = Math.sqrt(x);
+                    else if (func.equals("inv")) x = 1 / x;
+                    else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
+                    else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
+                    else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+                    else throw new RuntimeException("Unknown function: " + func);
+                } else {
+                    throw new RuntimeException("Unexpected: " + (char)ch);
+                }
 
-            <Button
-                android:id="@+id/btmDivision"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="/"
-                android:textSize="24sp" />
+                if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
 
-            <Button
-                android:id="@+id/btmModulo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="%"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btm4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="4"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/btm5"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="5"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/btm6"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="6"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/btmMultiplier"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="*"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/btmInverse"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="1/x"
-                android:textSize="24sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btm1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text="1"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/btm2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text="2"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/btm3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text="3"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/btmMoins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text="-"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btm0"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:onClick="clickFunc"
-                        android:text="0"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/btmVirgule"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text=","
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/btmPlus"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="clickFunc"
-                        android:text="+"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btmEgale"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="clickFunc"
-                android:text="="
-                android:textSize="24sp" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+                return x;
+            }
+        }.parse();
+    }
+}
